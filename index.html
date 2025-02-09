@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        img{
+          display: block;
+          object-fit:contain ;
+          width: 100%;
+          max-height:200px;
+          width: auto;
+          height: auto;
+        }
+        .card-text-truncate {
+          display: -webkit-box;
+          -webkit-line-clamp: 2; 
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-height: 6em; 
+          
+        }
+        
+    </style>
+
+</head>
+  <body>
+    <div id="liveAlertPlaceholder"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="product-show-modal-container" tabindex="-1" aria-labelledby="product-show-modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="product-show-modal">Product Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card mb-3">           
+              <img id='show-product-image' src="" class="card-img-top" alt="..."> 
+            
+              <div class="card-body">
+                <h5 id='show-product-title' class="card-title">Card title</h5>
+                <p id='show-product-description' class="card-text"> </p>
+                <p class="card-text"><small class="text-body-secondary">
+                  <ul>
+                    <li id="show-product-rating">Rating : </li>
+                    <li id="show-product-price">Price : </li>
+                    <li id="show-product-category">Category : </li>
+                  </ul>
+                </small></p>
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add a new product</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="add-product-form" class="row g-3" autocomplete="off">
+          <div class="col-12">
+            <label for="prod-title" class="form-label">Product Title</label>
+            <input type="text" class="form-control" id="prod-title">
+          </div>
+          <div class="col-md-6">
+            <label for="prod-price" class="form-label">Product Price</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text">$</span>
+              <input type="number" class="form-control" id="prod-price">
+              <span class="input-group-text">.00</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="prod-rating" class="form-label">Product Rating</label>
+            <input type="text" class="form-control" id ='prod-rating'>
+          </div>
+          <div class="col-12">
+            <!--select thingy-->
+            <label for="prod-category" class="form-label">Product Category</label>
+            <input type="text" class="form-control" id="prod-category">
+          </div>
+          <div class="col-12">
+            <label for ='prod-image' class='form-label'>Product Image URL</label>
+            <input type ="input" id="prod-image" class="form-control" />
+          </div>
+          <div class="col-12">
+            <label for="prod-description" class="form-label">Product Description</label>
+            <textarea class="form-control" id="prod-description" placeholder="Enter product description here"></textarea>
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="addProductButton" class="btn btn-primary">Add Product</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="edit-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel2">Edit Product</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id='update-product-form' class="row g-3" autocomplete="off">
+          <div class="col-12">
+            <label for="update-prod-title" class="form-label">Product Title</label>
+            <input type="text" name='updateProdTitle' class="form-control" id="update-prod-title">
+          </div>
+          <div class="col-md-6">
+            <label for="update-prod-price" class="form-label">Product Price</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text">$</span>
+              <input name="updateProdPrice" type="number" class="form-control" id="update-prod-price">
+              <span class="input-group-text">.00</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="update-prod-rating" class="form-label">Product Rating</label>
+            <input name="updateProdRating" type="text" class="form-control" id ='update-prod-rating'>
+          </div>
+          <div class="col-12">
+            <!--select thingy-->
+            <label for="update-prod-category" class="form-label">Datalist example</label>
+            <input name='updateProdCategory' class="form-control" id="update-prod-category" placeholder="" autocomplete="off">
+            
+          </div>
+          <div class="col-12">
+            <label for ='update-prod-image' class='form-label'>Product Image URL</label>
+            <input name="updateProdImage" type ="input" id="update-prod-image" class="form-control" />
+          </div>
+          <div class="col-12">
+            <label for="update-prod-description" class="form-label">Product Description</label>
+            <textarea name="updateProdDescription" class="form-control" id="update-prod-description" placeholder="Enter product description here"></textarea>
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="update-prod-item-button" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <nav class="navbar sticky-top navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">E-Commerce Platform</a>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" id="all-product-link" aria-current="page" href="#">All Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="add-product-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="#">Add Product</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Look By Category
+                </a>
+                <ul id="category-select-dropdown-list" class="dropdown-menu">
+                  
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <button class="btn btn-outline-secondary" id="changeTheme" type="button">🌗</button>
+        </div>
+      </nav>
+      <div class="container-fluid">
+        
+        <div class=" dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Limit
+          </button>
+          <ul id="limit-card-dropdown" class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">5</a></li>
+            <li><a class="dropdown-item" href="#">10</a></li>
+            <li><a class="dropdown-item" href="#">15</a></li>
+            <li><a class="dropdown-item" href="#">20</a></li>
+          </ul>
+        </div> 
+        
+        <div id="product-container">
+        </div>
+      
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous" async></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+  <script type="module" src="main.js"></script>
+</html>
