@@ -60,6 +60,7 @@ updateProdButton.addEventListener('click',()=>{
     editProductModal.hide();
 
 });
+
 addProductButton.addEventListener('click',()=>{
     const prod_data = {
         title: document.querySelector('#prod-title').value,
